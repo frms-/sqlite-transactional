@@ -1,1 +1,1 @@
-# `sqlite-transacional`
+# `sqlite-transactional`
