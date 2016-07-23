@@ -1,4 +1,4 @@
-{-# LANGUAGE General0izedNewtypeDeriving #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 -- |
 -- Module:      Database.SQLite.Transaction
