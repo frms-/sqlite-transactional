@@ -3,7 +3,7 @@ Example use:
 ```haskell
 
 import Database.SQLite
-import Database.SQLite.Transactional
+import Database.SQLite.Transaction
 import Text.Printf
 import Control.Monad (void)
 
