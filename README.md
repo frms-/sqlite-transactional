@@ -6,7 +6,7 @@ import Database.SQLite
 import Database.SQLite.Transactional
 import Text.Printf
 import Control.Monad (void)
-import Contor
+
 main :: IO ()
 main = openConnection "db.sqlite" >>= runTransaction trans
   where trans :: Transaction ()
