@@ -17,6 +17,7 @@ import Database.SQLite
 import Control.Monad.Reader
 import Control.Exception
 
+
 -- | The SQLite transaction monad transformer.
 newtype Transaction a = MkTransaction (ReaderT SQLiteHandle IO a )
   deriving ( Functor
@@ -35,7 +36,7 @@ instance Show TransactionType where
 
 -- | Run a deferred transaction.
 runTransaction ::  Transaction a -> SQLiteHandle -> IO a
-runTransaction trans con = runTransaction' Deferred trans con
+runTransaction = runTransaction' Deferred
 
 -- | Run a transaction of the given transaction type.
 runTransaction' :: TransactionType -> Transaction a -> SQLiteHandle -> IO a
@@ -44,7 +45,7 @@ runTransaction' typ (MkTransaction tr) con =
   begin con typ
   res <- try $ restore (runReaderT tr con)
   case res of
-    Left ex -> rollback con >> throwIO (ex ::SomeException)
+    Left ex -> rollback con >> throwIO (ex::SomeException)
     Right a -> do
       commit con
       return a

@@ -5,7 +5,6 @@ Example use:
 import Database.SQLite
 import Database.SQLite.Transactional
 import Text.Printf
-import Control.Monad (void)
 
 main :: IO ()
 main = openConnection "db.sqlite" >>= runTransaction trans
@@ -25,4 +24,17 @@ main = openConnection "db.sqlite" >>= runTransaction trans
           liftIO (putStrLn ("i = " ++ show i))
           void $ liftIO $ execStatement_ con (insert i)
         insert i = printf "insert into foo (bar) values (%d)" (i + 1)
+```
+
+```haskell
+import Database.SQLite
+import Database.SQLite.Transactional
+import Text.Printf
+
+main :: IO ()
+main = runTransaction insertMany =<< openConnection "db.sqlite"
+  where insertMany :: Transaction ()
+        insertMany = do
+          con <- ask
+          void $ liftIO $ forM [1..1000] $ \x -> execParamStatement_ con "insert into foo (bar) values (:val)" [(":val", Int x)]
 ```
