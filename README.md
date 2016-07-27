@@ -3,7 +3,7 @@ Example use:
 ```haskell
 
 import Database.SQLite
-import Database.SQLite.Transactional
+import Database.SQLite.Transaction
 import Text.Printf
 
 main :: IO ()
@@ -21,7 +21,6 @@ main = openConnection "db.sqlite" >>= runTransaction trans
         incrBar :: Int -> Transaction ()
         incrBar i = do
           con <- ask
-          liftIO (putStrLn ("i = " ++ show i))
           void $ liftIO $ execStatement_ con (insert i)
         insert i = printf "insert into foo (bar) values (%d)" (i + 1)
 ```
